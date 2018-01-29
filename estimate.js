@@ -1,16 +1,16 @@
-	$(function() {
+$(function() {
 		  	var d = new Date();
 		  	var city = '';
-    		if(!$.cookie('full_city'))
+    		if(!localStorage.full_city)
     		{
     			city = getLocation();
     		}	
     		else
     		{
-    			city = $.cookie('full_city');
+    			city = localStorage.full_city;
     		}
             alert(city);
-           // alert("Will arrive before: " + addDays(getShippingDay(d, 1, 13), getArrivalDays('nowhere' )) + " to " + city);
+            alert("Will arrive before: " + addDays(getShippingDay(d, 1, 13), getArrivalDays('doestn')) + " to " + city);
 
         	
         
@@ -21,14 +21,12 @@
 		  	
         	$.ajax({
   				url:"https://freegeoip.net/json/"}).done( function(data, status) {
-                   $.cookie("city", data.city);
-                   $.cookie("region_code", data.region_code);
-                   $.cookie("full_city", data.city + ", " + data.region_code);
-                   alert(data.city + ", " + data.region_code);
+                   localStorage.full_city =  data.city + ", " + data.region_code;
+                   
                    return data.city + ", " + data.region_code;
             })
   				.fail(function(data, status, error) {
-    				//alert( "error " + JSON.stringify(data));
+    			
   				});
 		  }
 		  function getShippingDay(date, numHandlingDays, cutOffHour)
@@ -68,10 +66,11 @@
 		  }
 		  function getArrivalDays(currentLocation)
 		  {
-		  	var arrivalDays = $.cookie('arrival_days');
+		  	var arrivalDays = localStorage.arrivalDays;
+		  	alert(arrivalDays);
 		  	if(!arrivalDays)
 		  	{
-		  	   getArrivalDays = 3;
+		  	   arrivalDays = 3;
 		  	}
 		  	
 		  	return arrivalDays;
