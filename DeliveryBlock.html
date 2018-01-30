@@ -1,7 +1,21 @@
-	<div class="dateWrapper">
+	<div class="dateWrapper estimatedDelivery">
 		<span data-toggle="tooltip" data-trigger="click hover focus" data-placement="top" class="dateHover" title="" data-original-title="Estimated Delivery is based on the time of the order and your chosen shipping method. Actual delivery date is subject to carrier selection, fraud prevention, and processing procedures. Track the actual delivery date via the tracking number in the shipping confirmation email.">
 			<span class="estimatedDeliveryTitle">Estimated Delivery</span><span class="glyphicon glyphicon-info-sign" aria-hidden="true"></span>
 		</span>
 		<div class="deliveryNote edit"><span id="deliveryDate"> </span><span id="deliveryLocation" class="estimatedDeliveryLocation">Austin, TX</span>
 		</div>
 	</div>
+
+<div class="formfield zipcode" style="display: none;">
+<label for="estimateddelivery_zipCode">
+<div class="">Estimate Your Delivery</div>
+</label>
+<div class="input-group input-group-sm" style="">
+<input class="text zipCodeField  form-control bound" name="estimateddelivery_zipCode" type="text" maxlength="5" placeholder="Enter Zip Code">
+<span class="input-group-btn">
+<button class="btn btn-primaryCta applyButton " type="button" ">
+Estimate
+</button>
+</span>
+</div>
+</div>
