@@ -1,5 +1,5 @@
 $(function() {
-		  	var d = new Date();
+		  	
 		  	var city = '';
     		if(!localStorage.full_city)
     		{
@@ -10,8 +10,16 @@ $(function() {
     			city = localStorage.full_city;
     		}
             
+            showEstimatedDelivery(city);
             
-            $.get('https://rawgit.com/jaronstein/EstimateDelivery/master/DeliveryBlock.html', function(data){
+        	
+        
+        
+        });
+          function showEstimatedDelivery(city)
+          {
+          	var d = new Date();
+          	$.get('https://raw.githubusercontent.com/jaronstein/EstimateDelivery/master/DeliveryBlock.html', function(data){
 		    $(data).insertAfter('.product-price__price'); 
 		    var deliveryDate = addDays(getShippingDay(d, 1, 13), getArrivalDays('doestn'));
 		    deliveryDate = deliveryDate.toString().substring(0,10).replace(' ', ', ');
@@ -23,17 +31,16 @@ $(function() {
             }
             $('#deliveryDate').html(deliveryDate + " to ");
             $('#deliveryLocation').html(city);
-		});
-        	
-        
-        
-        });
+            $('#estimatedDeliveryForm').hide();
+		  	$('#dataWrapper').show();
+			});
+          }
 		  function getLocation()
 		  {
 		  	
         	$.ajax({
   				url:"https://freegeoip.net/json/"}).done( function(data, status) {
-                   localStorage.full_city =  data.city + ", " + data.region_code;
+                     localStorage.full_city =data.city + ", " + data.region_code;
                    
                    return data.city + ", " + data.region_code;
             })
@@ -88,7 +95,17 @@ $(function() {
 		  	return arrivalDays;
 
 		  }
-		  function createHTML(divToFollow)
+		  function showForm()
 		  {
+		  		$('#estimatedDeliveryForm').show();
+		  		$('#dataWrapper').hide();
+		  }
+		  function submitForm(zip)
+		  {
+		  	  $.get('http://ziptasticapi.com/' + zip, function(data){
+              localStorage.full_city =data.city + ", " + data.state;
+              localStorage.zip = zip;
+              showEstimatedDelivery(city);
 
+		  	  });
 		  }
