@@ -11,7 +11,8 @@ $(function() {
     		}
             alert(city);
             alert("Will arrive before: " + addDays(getShippingDay(d, 1, 13), getArrivalDays('doestn')) + " to " + city);
-
+            $.get('https://rawgit.com/jaronstein/EstimateDelivery/master/DeliveryBlock.html', function(data){
+		    $(data).insertAfter('.product-single__price'); });
         	
         
         
