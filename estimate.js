@@ -9,10 +9,21 @@ $(function() {
     		{
     			city = localStorage.full_city;
     		}
-            alert(city);
-            alert("Will arrive before: " + addDays(getShippingDay(d, 1, 13), getArrivalDays('doestn')) + " to " + city);
+            
+            
             $.get('https://rawgit.com/jaronstein/EstimateDelivery/master/DeliveryBlock.html', function(data){
-		    $(data).insertAfter('.product-single__price'); });
+		    $(data).insertAfter('.product-price__price'); 
+		    var deliveryDate = addDays(getShippingDay(d, 1, 13), getArrivalDays('doestn'));
+		    deliveryDate = deliveryDate.toString().substring(0,10).replace(' ', ', ');
+            
+            if(deliveryDate.substring(9,10) == "0")
+            {
+            	
+            	deliveryDate = deliveryDate.replace('0', '');
+            }
+            $('#deliveryDate').html(deliveryDate + " to ");
+            $('#deliveryLocation').html(city);
+		});
         	
         
         
@@ -68,12 +79,16 @@ $(function() {
 		  function getArrivalDays(currentLocation)
 		  {
 		  	var arrivalDays = localStorage.arrivalDays;
-		  	alert(arrivalDays);
+		  	
 		  	if(!arrivalDays)
 		  	{
 		  	   arrivalDays = 3;
 		  	}
 		  	
 		  	return arrivalDays;
+
+		  }
+		  function createHTML(divToFollow)
+		  {
 
 		  }
