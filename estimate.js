@@ -99,6 +99,7 @@ $(function() {
 		  {
 		  		$('#estimatedDeliveryForm').show();
 		  		$('#dataWrapper').hide();
+			        alert('show form');
 		  }
 		  function submitForm(zip)
 		  {
