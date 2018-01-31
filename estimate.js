@@ -101,7 +101,7 @@
 
 				if(!arrivalDays)
 				{
-					$.get('http://estimateddeliveryapi20180131024544.azurewebsites.net/api/Estimate?zip=78703
+					$.get('http://estimateddeliveryapi20180131024544.azurewebsites.net/api/Estimate?zip=' + currentLocation
 					      , function(data){ arrivalDays = data; 
 							      return arrivalDays;});
 				}
