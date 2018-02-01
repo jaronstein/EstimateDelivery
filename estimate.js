@@ -30,7 +30,7 @@
 					if(window.location.pathname.indexOf('products') > 0)
 						$(data).insertAfter('.product-price__price');
 					else if (window.location.pathname.indexOf('cart') > 0)
-						$(data.insertAfter('list-view-item__title'));	
+						$(data).insertAfter('list-view-item__title');	
 				}
                 getArrivalDays(localStorage.zip, !newForm);
                 //var arrivalDays = getArrivalDays(localStorage.zip, !newForm);
