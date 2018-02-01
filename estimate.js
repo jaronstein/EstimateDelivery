@@ -29,10 +29,16 @@
 				{
 					$(data).insertAfter('.product-price__price'); 
 				}
-
-				var deliveryDate = addDays(getShippingDay(d, 1, 13), getArrivalDays('doestn'));
-				deliveryDate = deliveryDate.toString().substring(0,10).replace(' ', ', ');
-
+                getArrivalDays(localStorage.zip, !newForm);
+                //var arrivalDays = getArrivalDays(localStorage.zip, !newForm);
+                //var deliveryDate = addDays(getShippingDay(d, 1, 13), arrivalDays);
+				//deliveryDate = deliveryDate.toString().substring(0,10).replace(' ', ', ');
+				
+			});
+		}
+		function displayDate(deliveryDate, city)
+		{		 
+          
 				if(deliveryDate.substring(9,10) == "0")
 				{
 
@@ -44,7 +50,6 @@
 				$('#estimatedDeliveryForm').hide();
 
 				$('.dateWrapper').show();
-			});
 		}
 		function getLocation()
 		{
@@ -70,6 +75,7 @@
 					if(date.getHours() > cutOffHour)
 					{
 						numHandlingDays = numHandlingDays + 1;
+						date.setHours(0);
 					}
 					if(numHandlingDays == 0)
 					{
@@ -85,25 +91,63 @@
 					return getShippingDay(date.setDate(date.getDate() + 1), numHandlingDays, cutOffHour);
 				}
 			}
-			function addDays(date, toAdd)
+			/*function addDays(date, toAdd)
 			{
+				
 				date = new Date(date);
-				date.setDate(date.getDate() + toAdd);
+                toAdd = parseInt(toAdd);
+				console.log("adding days");
+				console.log(date.getDate());
+				console.log(toAdd);
+                console.log(date.getDate() + toAdd);
+                var amountToAdd = date.getDate() + toAdd;
+				date = date.setDate(date.getDate() + toAdd);
+				date = new Date(date);
+				console.log('set date called');
+				console.log(date);
+
 				if(date.getDay() == 0 || date.getDay() == 6)
 				{
+					console.log("recursing");
 					return addDays(date, 1);
 				}
 				return date;
-			}
-			function getArrivalDays(currentLocation)
+			}*/
+			function addDays(date, daysToAdd)
 			{
-				var arrivalDays = localStorage.arrivalDays;
-
-				if(!arrivalDays)
+				daysToAdd = parseInt(daysToAdd);
+				for(var i = 0; i<daysToAdd;)
 				{
-					$.get('http://estimateddeliveryapi20180131024544.azurewebsites.net/api/Estimate?zip=' + currentLocation
-					      , function(data){ arrivalDays = data; 
+					date = date.setDate(date.getDate() + 1);
+					date = new Date(date);
+					if(date.getDay() != 0 && date.getDay() != 6)
+						i++;
+				}
+				return date;
+			}
+			function getArrivalDays(zip, reSubmit)
+			{
+
+				var arrivalDays = localStorage.arrivalDays;
+				
+				if(!arrivalDays || reSubmit)
+				{
+					
+					$.get('http://estimateddeliveryapi20180131024544.azurewebsites.net/api/Estimate?zip=' + zip
+					      , function(data){ arrivalDays = parseInt(data); 
+					      	localStorage.arrivalDays = arrivalDays;
+					      	    
+					      	     var deliveryDate = addDays(getShippingDay(new Date(), 1, 13), arrivalDays);
+					      	     deliveryDate = deliveryDate.toString().substring(0,10).replace(' ', ', ');
+					      	     displayDate(deliveryDate, localStorage.full_city);
 							      return arrivalDays;});
+				}
+				else
+				{
+					
+               	 	var deliveryDate = addDays(getShippingDay(new Date(), 1, 13), arrivalDays);
+					deliveryDate = deliveryDate.toString().substring(0,10).replace(' ', ', ');
+					displayDate(deliveryDate, localStorage.full_city);
 				}
 
 				return arrivalDays;
@@ -127,3 +171,4 @@
 
 				});
 			}
+
