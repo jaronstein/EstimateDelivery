@@ -1,3 +1,4 @@
+var handlingDays = 2;
 		$(function() {
 
 			var city = '';
@@ -30,7 +31,7 @@
 					if(window.location.pathname.indexOf('products') > 0)
 						$(data).insertAfter('.product-price__price');
 					else if (window.location.pathname.indexOf('cart') > 0)
-						$(data).insertAfter('.list-view-item__title');	
+						$(data).insertAfter('.list-view-item__title');	 
 				}
                 getArrivalDays(localStorage.zip, !newForm);
                 //var arrivalDays = getArrivalDays(localStorage.zip, !newForm);
@@ -140,7 +141,7 @@
 					      , function(data){ arrivalDays = parseInt(data); 
 					      	localStorage.arrivalDays = arrivalDays;
 					      	    
-					      	     var deliveryDate = addDays(getShippingDay(new Date(), 1, 13), arrivalDays);
+					      	     var deliveryDate = addDays(getShippingDay(new Date(), handlingDays, 13), arrivalDays);
 					      	     deliveryDate = deliveryDate.toString().substring(0,10).replace(' ', ', ');
 					      	     displayDate(deliveryDate, localStorage.full_city);
 							      return arrivalDays;});
@@ -148,7 +149,7 @@
 				else
 				{
 					
-               	 	var deliveryDate = addDays(getShippingDay(new Date(), 1, 13), arrivalDays);
+               	 	var deliveryDate = addDays(getShippingDay(new Date(), handlingDays, 13), arrivalDays);
 					deliveryDate = deliveryDate.toString().substring(0,10).replace(' ', ', ');
 					displayDate(deliveryDate, localStorage.full_city);
 				}
@@ -174,4 +175,3 @@
 
 				});
 			}
-
