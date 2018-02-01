@@ -27,7 +27,10 @@
 			$.get('https://raw.githubusercontent.com/jaronstein/EstimateDelivery/master/DeliveryBlock.html', function(data){
 				if(newForm)
 				{
-					$(data).insertAfter('.product-price__price'); 
+					if(window.location.pathname.indexOf('products') > 0)
+						$(data).insertAfter('.product-price__price');
+					else if (window.location.pathname.indexOf('cart') > 0)
+						$(data.insertAfter('list-view-item__title'));	
 				}
                 getArrivalDays(localStorage.zip, !newForm);
                 //var arrivalDays = getArrivalDays(localStorage.zip, !newForm);
