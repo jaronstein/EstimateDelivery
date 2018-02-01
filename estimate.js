@@ -71,6 +71,8 @@ var handlingDays = 2;
 			}
 			function getShippingDay(date, numHandlingDays, cutOffHour)
 			{
+				console.log("handling days" + numHandlingDays);
+				console.log("passed in Date" + date);
 				date = new Date(date);
 				var currentDay = date.getDay();
 
@@ -80,6 +82,7 @@ var handlingDays = 2;
 					{
 						numHandlingDays = numHandlingDays + 1;
 						date.setHours(0);
+						console.log('set hours');
 					}
 					if(numHandlingDays == 0)
 					{
